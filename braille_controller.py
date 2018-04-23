@@ -1,27 +1,31 @@
 from gpiozero import Button
 from gpiozero import OutputDevice
-
+from time import sleep
 class SolenoidController:
     SOLENOID=[]
     def __init__(self):
-        """
-        SOLENOID_0=13  SOLENOID_1=16
-        SOLENOID_2=19  SOLENOID_3=20
-        SOLENOID_4=26  SOLENOID_5=21
-        """
-        SOLENOID_PIN=[13,16,19,20,26,21]
+        SOLENOID_PIN=[13,19,26,16,20,21]
         for i in SOLENOID_PIN:
             self.SOLENOID.append(OutputDevice(i))
+        for i in range(2,6):
+            self.SOLENOID[i].on()
 
     def __del__(self):
         for i in self.SOLENOID:
             i.close()
 
     def on(self,braille_num): # braille_num = 0 ~ 5
-        self.SOLENOID[braille_num].on()
-
+        if(braille_num<2):
+            self.SOLENOID[braille_num].on()
+        else:
+            self.SOLENOID[braille_num].off()
+        
     def off(self,braille_num):
-        self.SOLENOID[braille_num].off()
+        if(braille_num<2):
+            self.SOLENOID[braille_num].off()
+        else:
+            self.SOLENOID[braille_num].on()
+
 
 class AnswerReader:
     ANSWER_BTN=[]
