@@ -18,13 +18,14 @@ engine.say('How are you today?' )
 engine.runAndWait()   
 
 """
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import time
-import pyttsx3
+# import pyttsx3
 import random   
-import pygame
-from braille_controller import Solenoidcontroller
-from braille_controller import AnswerReader
+# import pygame
+from mock_braille_controller import SolenoidController
+from mock_braille_controller import AnswerReader
+import mock_sound_controller
 
 
 
@@ -70,13 +71,14 @@ def main():
             hangle_quize()
 
 def talker(string):
-    engine = pyttsx3.init() # tts init
-    engine.setProperty('rate', 100)
-    engine.say(string)  
-    engine.runAndWait()
+    time.sleep(2)
+    # engine = pyttsx3.init() # tts init
+    # engine.setProperty('rate', 100)
+    # engine.say(string)
+    # engine.runAndWait()
 
 def english_edu():
-    solenoid = Solenoidcontroller()
+    solenoid = SolenoidController()
 
     # 버튼 출력
     for i in range(len(english)):
@@ -85,9 +87,7 @@ def english_edu():
             solenoid.on(button_up[j])
 
         # 스피커 출력
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound()#파일어떻게 불러올지
-        sound.play()
+        mock_sound_controller.play_sound()
         time.sleep(2.0)
 
         # 버튼확인 및 버튼 초기화 (로직이 정지했다가 확인버튼이 입력되면 다음 명령 실행?)
@@ -99,7 +99,7 @@ def english_edu():
             print('Next dictionary')
 
 def hangle_edu():
-    solenoid = Solenoidcontroller()
+    solenoid = SolenoidController()
 
     #버튼 출력(초성)
     for i in range(len(hangle_front)):
@@ -108,9 +108,7 @@ def hangle_edu():
             solenoid.on(button_up[j])
 
         #스피커 출력
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound()
-        sound.play()
+        mock_sound_controller.play_sound()
         time.sleep(2.0)
 
         #버튼확인 및 버튼 초기화
@@ -128,9 +126,7 @@ def hangle_edu():
             solenoid.on(button_up[j])
 
          # 스피커 출력
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound()
-        sound.play()
+        mock_sound_controller.play_sound()
         time.sleep(2.0)
 
          # 버튼확인 및 버튼 초기화
@@ -148,9 +144,7 @@ def hangle_edu():
             solenoid.on(button_up[j])
 
         #스피커 출력
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound()
-        sound.play()
+        mock_sound_controller.play_sound()
         time.sleep(2.0)
 
         #버튼확인 및 버튼 초기화
@@ -167,40 +161,36 @@ def english_quize():
         problem = english[random.randint(1,26)] #문제
 
         # 스피커 출력
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound(파일명)
-        sound.play()
+        mock_sound_controller.play_sound()
         time.sleep(2.0)
 
         answer = input() # 정답입력 받고
 
-        if  == :  #정답확인
-            talker('success')
-            print('success')
-
-        else:
-            talker('fail')
-            print('fail')
+        # if  == :  #정답확인
+        #     talker('success')
+        #     print('success')
+        #
+        # else:
+        #     talker('fail')
+        #     print('fail')
 
 def hangle_quize():
 
     for i in range(len(english)):
         problem = english[random.randint(1,26)] #문제
-
-        # 스피커 출력
-        pygame.mixer.init()
-        sound = pygame.mixer.Sound(파일명)
-        sound.play()
-        time.sleep(2.0)
-
-        answer = input() # 정답입력 받고
-
-        if  == :  #정답확인
-            talker('success')
-            print('success')
-
-        else:
-            talker('fail')
-            print('fail')
+    #
+    #     # 스피커 출력
+        mock_sound_controller.play_sound()
+    #     time.sleep(2.0)
+    #
+    #     answer = input() # 정답입력 받고
+        #
+        # if  == :  #정답확인
+        #     talker('success')
+        #     print('success')
+        #
+        # else:
+        #     talker('fail')
+        #     print('fail')
 
 main()
