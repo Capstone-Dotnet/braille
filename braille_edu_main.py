@@ -1,23 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-     *******************   이슈    ************************
-tts 관련해서 네이버 구글 아마존 검색결과 
-인터넷이 연결된 환경에서 가능한거 같습니다.
- 
-pyttsx3 (영어밖에 지원 안하는듯...  남여 목소리변경 rate변경 확인 ...)
-# 패키지 설치 
-# pip install pyttsx로 또는 sudo pip install pyttsx   파이썬 버전 확인 필요.    
-# pip install pyttsx3 2.7 ~ 3.6까지 동작한다고 함.. 
-# pip install pypiwin32
 
-# pyttsx3 사용예제
-engine = pyttsx3.init()  
-engine.setProperty('rate', 150) 
-engine.say('Greetings!') 
-engine.say('How are you today?' ) 
-engine.runAndWait()   
-
-"""
 # import RPi.GPIO as GPIO
 import time
 # import pyttsx3
