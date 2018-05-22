@@ -6,8 +6,6 @@ import time
 import random
 # import pygame
 from mock_braille_controller import SolenoidController
-from mock_braille_controller import AnswerReader
-import mock_sound_controller
 
 # 전역변수
 play_mode = 0  # 교육:1 / 문제:2
@@ -53,7 +51,7 @@ def main():
 
         if language_selection == 0:  # 영어 시작
             print('English start')
-            english_quize()
+            # english_quize()
         else:  # 한글 시작
             print('hangle start')
             hangle_quize()
@@ -125,25 +123,6 @@ def hangle_edu():
             print('Next dictionary')
 
 
-def english_quize():
-    for i in range(len(english)):
-        problem = english[random.randint(1, 26)]  # 문제
-
-        # 스피커 출력
-        mock_sound_controller.play_sound()
-        time.sleep(2.0)
-
-        answer = input()  # 정답입력 받고
-
-        # if  == :  #정답확인
-        #     talker('success')
-        #     print('success')
-        #
-        # else:
-        #     talker('fail')
-        #     print('fail')
-
-
 def hangle_quize():
     for i in range(len(english)):
         problem = english[random.randint(1, 26)]  # 문제
@@ -164,6 +143,8 @@ def hangle_quize():
 
 
 from mock_braille_controller import ButtonListener
+from mock_braille_controller import AnswerReader
+import mock_sound_controller
 import enum
 
 
@@ -182,6 +163,7 @@ class TeachingMachine:
     GameMode = GameMode.EDUCATION
     buttonListener = ButtonListener()
     solenoid = SolenoidController()
+    answerReader = AnswerReader()
     edu_index = 0
 
     def __init__(self):
@@ -189,16 +171,39 @@ class TeachingMachine:
         self.buttonListener.set_on_click_mode_change_btn(self.on_click_mode_change)
         self.buttonListener.set_on_click_next_btn(self.on_click_next)
         self.buttonListener.set_on_click_pre_btn(self.on_click_pre)
+        self.buttonListener.set_on_click_submit_answer_btn(self.on_click_submit_answer)
 
     def process(self):
         print("prcesss")
         self.english_edu()
+
+    def on_click_submit_answer(self):
+        temp = self.answerReader.read()
+        answer = []
+        for i in range(6):
+            if temp[i]:
+                answer.append(i)
+
+        fail_flag = 0
+        if len(self.problem) == len(answer):
+            for i in range(len(answer)):
+                if self.problem[i] != answer[i]:
+                    fail_flag += 1
+        else:
+            fail_flag += 1
+
+        if fail_flag == 0:
+            print('success')
+            self.english_quiz()
+        else:
+            print('fail')
 
     def on_click_lang_change(self):
         if self.Language == Language.KOREA:
             self.Language = Language.ENGLISH
         else:
             self.Language = Language.KOREA
+        self.edu_index = 0
 
     def on_click_mode_change(self):
         if self.GameMode == GameMode.EDUCATION:
@@ -230,6 +235,11 @@ class TeachingMachine:
 
         # 스피커 출력
         mock_sound_controller.play_sound("영어/" + braille[0] + ".wav")
+
+    def english_quiz(self):
+        self.problem = english[random.randint(1, 26)]  # 문제
+        # 스피커 출력
+        mock_sound_controller.play_sound("sound/" + self.problem[0] + ".wav")
 
 
 teachingMachine = TeachingMachine()
