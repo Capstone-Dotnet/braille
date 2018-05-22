@@ -12,9 +12,11 @@ import mock_sound_controller
 # 전역변수
 play_mode = 0  # 교육:1 / 문제:2
 language_selection = 0  # 언어선택
-english = [[0], [0, 2], [0, 1], [0, 1, 3], [0, 3], [0, 1, 2], [0, 1, 2, 3], [0, 2, 3], [1, 2], [1, 2, 3], [0, 4],
-           [0, 2, 4], [0, 1, 4], [0, 1, 3, 4], [0, 3, 4], [0, 1, 2, 4], [0, 1, 2, 3, 4], [0, 2, 3, 4], [1, 2, 4],
-           [1, 2, 3, 4], [0, 4, 5], [0, 2, 4, 5], [1, 2, 3, 5], [0, 1, 4, 5], [0, 1, 3, 4, 5], [0, 3, 4, 5]]  # A~Z
+english = [["a", 0], ["b", 0, 2], ["c", 0, 1], ["d", 0, 1, 3], ["e", 0, 3], ["f", 0, 1, 2], ["g", 0, 1, 2, 3],
+           ["h", 0, 2, 3], ["i", 1, 2], ["j", 1, 2, 3], ["k", 0, 4], ["l", 0, 2, 4], ["m", 0, 1, 4], ["n", 0, 1, 3, 4],
+           ["o", 0, 3, 4], ["p", 0, 1, 2, 4], ["q", 0, 1, 2, 3, 4], ["r", 0, 2, 3, 4], ["s", 1, 2, 4],
+           ["t", 1, 2, 3, 4], ["u", 0, 4, 5], ["v", 0, 2, 4, 5], ["w", 1, 2, 3, 5], ["x", 0, 1, 4, 5],
+           ["y", 0, 1, 3, 4, 5], ["z", 0, 3, 4, 5]]  # A~Z
 hangle_front = [[1], [0, 1], [1, 2], [3], [0, 3], [1, 3], [5], [0, 1, 2, 3], [1, 5], [3, 5], [0, 1, 2], [0, 2, 3],
                 [0, 1, 3], [1, 2, 3]]  # ㄱ~ ㅎ
 hangle_middle = [[0, 2, 5], [1, 3, 4], [1, 2, 4], [0, 3, 5], [0, 4, 5], [1, 4, 5], [0, 1, 4], [0, 1, 5], [1, 2, 5],
@@ -39,7 +41,7 @@ def main():
 
         if language_selection == 0:  # 영어 시작
             print('English start')
-            english_edu()
+            # english_edu()
         else:  # 한글 시작
             print('hangle start')
             hangle_edu()
@@ -63,28 +65,6 @@ def talker(string):
     # engine.setProperty('rate', 100)
     # engine.say(string)
     # engine.runAndWait()
-
-
-def english_edu():
-    solenoid = SolenoidController()
-
-    # 버튼 출력
-    for i in range(len(english)):
-        button_up = english[i]
-        for j in range(len(button_up)):
-            solenoid.on(button_up[j])
-
-        # 스피커 출력
-        mock_sound_controller.play_sound()
-        time.sleep(2.0)
-
-        # 버튼확인 및 버튼 초기화 (로직이 정지했다가 확인버튼이 입력되면 다음 명령 실행?)
-        talker('Solenoid check')
-        print('Solenoid check')
-        pause = input()  # 확인버튼값을 받아야함
-
-        if pause == True:
-            print('Next dictionary')
 
 
 def hangle_edu():
@@ -201,13 +181,18 @@ class TeachingMachine:
     Language = Language.KOREA
     GameMode = GameMode.EDUCATION
     buttonListener = ButtonListener()
+    solenoid = SolenoidController()
+    edu_index = 0
 
     def __init__(self):
         self.buttonListener.set_on_click_lang_change_btn(self.on_click_lang_change)
         self.buttonListener.set_on_click_mode_change_btn(self.on_click_mode_change)
+        self.buttonListener.set_on_click_next_btn(self.on_click_next)
+        self.buttonListener.set_on_click_pre_btn(self.on_click_pre)
 
     def process(self):
         print("prcesss")
+        self.english_edu()
 
     def on_click_lang_change(self):
         if self.Language == Language.KOREA:
@@ -221,5 +206,31 @@ class TeachingMachine:
         else:
             self.GameMode = GameMode.EDUCATION
 
+    def on_click_next(self):
+        self.edu_index += 1
+        self.educate()
 
-TeachingMachine().process()
+    def on_click_pre(self):
+        self.edu_index -= 1
+        self.educate()
+
+    def educate(self):
+        if self.edu_index < len(english):
+            self.english_edu()
+        else:
+            self.edu_index = 0
+        self.english_edu()
+
+    def english_edu(self):
+        self.solenoid.offAll()
+        braille = english[self.edu_index]
+        # 점자 출력
+        for j in range(1, len(braille)):
+            self.solenoid.on(braille[j])
+
+        # 스피커 출력
+        mock_sound_controller.play_sound("영어/" + braille[0] + ".wav")
+
+
+teachingMachine = TeachingMachine()
+teachingMachine.process()
