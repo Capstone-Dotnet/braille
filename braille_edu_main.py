@@ -2,9 +2,11 @@
 from mock_braille_controller import SolenoidController
 from mock_braille_controller import ButtonListener
 from mock_braille_controller import AnswerReader
-import mock_sound_controller
+from mock_sound_controller import SoundController
+from braille_enum import Language
+from braille_enum import GameMode
+import braille_dictionary
 import random
-import enum
 
 english = [["a", 0], ["b", 0, 2], ["c", 0, 1], ["d", 0, 1, 3], ["e", 0, 3], ["f", 0, 1, 2], ["g", 0, 1, 2, 3],
            ["h", 0, 2, 3], ["i", 1, 2], ["j", 1, 2, 3], ["k", 0, 4], ["l", 0, 2, 4], ["m", 0, 1, 4], ["n", 0, 1, 3, 4],
@@ -19,23 +21,15 @@ hangle_end = [[0], [2, 3], [3, 4], [2], [2, 5], [0, 2], [4], [2, 3, 4, 5], [0, 4
               [2, 3, 5], [3, 4, 5]]  # ㄱ~ㅎ
 
 
-class Language(enum.Enum):
-    KOREA = 0
-    ENGLISH = 1
-
-
-class GameMode(enum.Enum):
-    QUIZ = 0
-    EDUCATION = 1
-
-
 class TeachingMachine:
     Language = Language.KOREA
     GameMode = GameMode.EDUCATION
     buttonListener = ButtonListener()
     solenoid = SolenoidController()
     answerReader = AnswerReader()
+    soundController = SoundController(Language)
     edu_index = 0
+    problem = []
 
     def __init__(self):
         self.buttonListener.set_on_click_lang_change_btn(self.on_click_lang_change)
@@ -64,37 +58,41 @@ class TeachingMachine:
             fail_flag += 1
 
         if fail_flag == 0:
-            print('success')
+            self.soundController.say_answer_success()
             self.english_quiz()
         else:
-            print('fail')
+            self.soundController.say_answer_fail()
 
     def on_click_lang_change(self):
         if self.Language == Language.KOREA:
             self.Language = Language.ENGLISH
+            self.soundController.change_language(Language.ENGLISH)
         else:
             self.Language = Language.KOREA
+            self.soundController.change_language(Language.KOREA)
         self.edu_index = 0
+        self.soundController.say_selected_language()
 
     def on_click_mode_change(self):
         if self.GameMode == GameMode.EDUCATION:
             self.GameMode = GameMode.QUIZ
         else:
             self.GameMode = GameMode.EDUCATION
+        self.soundController.say_selected_mode(self.GameMode)
 
     def on_click_next(self):
         self.edu_index += 1
+        if self.edu_index > len(english):
+            self.edu_index = 0
         self.educate()
 
     def on_click_pre(self):
         self.edu_index -= 1
+        if self.edu_index < 0:
+            self.edu_index = len(english)
         self.educate()
 
     def educate(self):
-        if self.edu_index < len(english):
-            self.english_edu()
-        else:
-            self.edu_index = 0
         self.english_edu()
 
     def english_edu(self):
@@ -104,14 +102,13 @@ class TeachingMachine:
         for j in range(1, len(braille)):
             self.solenoid.on(braille[j])
 
-        # 스피커 출력
-        mock_sound_controller.play_sound("영어/" + braille[0] + ".wav")
+        self.soundController.play_sound("영어/" + braille[0] + ".wav")
 
     def english_quiz(self):
         self.problem = english[random.randint(1, 26)]  # 문제
-        # 스피커 출력
-        mock_sound_controller.play_sound("sound/" + self.problem[0] + ".wav")
+        self.soundController.play_sound("sound/" + self.problem[0] + ".wav")
 
 
 teachingMachine = TeachingMachine()
 teachingMachine.process()
+teachingMachine.on_click_mode_change()
