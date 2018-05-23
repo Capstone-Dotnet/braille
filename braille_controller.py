@@ -44,6 +44,13 @@ class AnswerReader:
             result.append(self.ANSWER_BTN[i].is_pressed)
         return result #return [True or False, ... , True or False]
 
+    def read_and_get_abbreviation(self):
+        answer = []
+        for i in range(6):
+            if self.ANSWER_BTN[i].is_pressed:
+                answer.append(i)
+        return answer
+
 class ButtonListener:
     LANGUAGE_CHANGE_BTN=Button(9)
     NEXT_BTN=Button(8)

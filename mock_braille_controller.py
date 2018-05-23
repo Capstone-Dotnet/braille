@@ -14,6 +14,13 @@ class AnswerReader:
         result = [False, False, False, False, False, False]
         return result  # return [True or False, ... , True or False]
 
+    def read_and_get_abbreviation(self):
+        temp = self.read()
+        answer = []
+        for i in range(6):
+            if temp[i]:
+                answer.append(i)
+
 
 class ButtonListener:
 

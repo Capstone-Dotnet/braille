@@ -43,11 +43,7 @@ class TeachingMachine:
         self.english_edu()
 
     def on_click_submit_answer(self):
-        temp = self.answerReader.read()
-        answer = []
-        for i in range(6):
-            if temp[i]:
-                answer.append(i)
+        answer = self.answerReader.read_and_get_abbreviation()
 
         fail_flag = 0
         if len(self.problem) == len(answer):
@@ -111,4 +107,3 @@ class TeachingMachine:
 
 teachingMachine = TeachingMachine()
 teachingMachine.process()
-teachingMachine.on_click_mode_change()
