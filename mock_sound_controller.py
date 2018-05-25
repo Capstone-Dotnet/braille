@@ -1,4 +1,5 @@
 from braille_enum import GameMode
+from braille_enum import Classification
 
 
 class SoundController:
@@ -25,4 +26,14 @@ class SoundController:
             self.play_sound("문제모드입니다.")
 
     def play_sound(self, path):
-        print("play", path)
+        print("play : ", path)
+
+    def play_braille(self, braille):
+        if braille[1] == Classification.INITIAL:
+            print("초성")
+        elif braille[1] == Classification.MEDIAL:
+            print("중성")
+        elif braille[1] == Classification.FINAL:
+            print("종성")
+
+        print("play", "sound/" + braille[0] + ".wav")

@@ -28,7 +28,6 @@ class TeachingMachine:
         self._problem = []
 
     def process(self):
-        print("prcesss")
         self.on_click_next()
 
     def on_click_submit_answer(self):
@@ -80,11 +79,11 @@ class TeachingMachine:
         for j in range(2, len(braille)):
             self._solenoid.on(braille[j])
 
-        self._soundController.play_sound("sound/" + braille[0] + ".wav")
+        self._soundController.play_braille(braille)
 
     def quiz(self):
         self._problem = self._dictionary.random_word()
-        self._soundController.play_sound("sound/" + self._problem[0] + ".wav")
+        self._soundController.play_braille(self._problem)
 
 
 teachingMachine = TeachingMachine()

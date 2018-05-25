@@ -1,13 +1,5 @@
-import enum
 import random
-
-
-class Classification(enum.Enum):
-    INITIAL = enum.auto()
-    MEDIAL = enum.auto()
-    FINAL = enum.auto()
-    ABBREVIATION = enum.auto()
-    ALPHABET = enum.auto()
+from braille_enum import Classification
 
 
 class BrailleDictionary:
