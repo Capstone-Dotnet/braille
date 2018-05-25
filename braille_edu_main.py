@@ -14,6 +14,7 @@ class TeachingMachine:
         self._buttonListener = ButtonListener()
         self._solenoid = SolenoidController()
         self._answerReader = AnswerReader()
+        self._language = Language.KOREA
         self._dictionary = BrailleDictionary(self._language)
         self._soundController = SoundController(self._language)
 
@@ -23,14 +24,13 @@ class TeachingMachine:
         self._buttonListener.set_on_click_pre_btn(self.on_click_pre)
         self._buttonListener.set_on_click_submit_answer_btn(self.on_click_submit_answer)
 
-        self._language = Language.KOREA
         self._game_mode = GameMode.EDUCATION
         self.edu_index = 0
         self.problem = []
 
     def process(self):
         print("prcesss")
-        self.educate()
+        self.on_click_next()
 
     def on_click_submit_answer(self):
         answer = self._answerReader.read_and_get_abbreviation()
