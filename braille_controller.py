@@ -1,6 +1,7 @@
 from gpiozero import Button
 from gpiozero import OutputDevice
 
+
 class SolenoidController:
     SOLENOID = []
 
@@ -16,13 +17,13 @@ class SolenoidController:
             i.close()
 
     def on(self, braille_num):  # braille_num = 0 ~ 5
-        if (braille_num < 2):
+        if braille_num < 2:
             self.SOLENOID[braille_num].on()
         else:
             self.SOLENOID[braille_num].off()
 
     def off(self, braille_num):
-        if (braille_num < 2):
+        if braille_num < 2:
             self.SOLENOID[braille_num].off()
         else:
             self.SOLENOID[braille_num].on()
