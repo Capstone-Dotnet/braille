@@ -77,7 +77,7 @@ class TeachingMachine:
     def educate(self, braille):
         self._solenoid.off_all()
         # 점자 출력
-        for j in range(1, len(braille)):
+        for j in range(2, len(braille)):
             self._solenoid.on(braille[j])
 
         self._soundController.play_sound("sound/" + braille[0] + ".wav")

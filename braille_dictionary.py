@@ -7,15 +7,25 @@ class Classification(enum.Enum):
     MEDIAL = enum.auto()
     FINAL = enum.auto()
     ABBREVIATION = enum.auto()
+    ALPHABET = enum.auto()
 
 
 class BrailleDictionary:
-    _english = [["a", 0], ["b", 0, 2], ["c", 0, 1], ["d", 0, 1, 3], ["e", 0, 3], ["f", 0, 1, 2], ["g", 0, 1, 2, 3],
-                ["h", 0, 2, 3], ["i", 1, 2], ["j", 1, 2, 3], ["k", 0, 4], ["l", 0, 2, 4], ["m", 0, 1, 4],
-                ["n", 0, 1, 3, 4],
-                ["o", 0, 3, 4], ["p", 0, 1, 2, 4], ["q", 0, 1, 2, 3, 4], ["r", 0, 2, 3, 4], ["s", 1, 2, 4],
-                ["t", 1, 2, 3, 4], ["u", 0, 4, 5], ["v", 0, 2, 4, 5], ["w", 1, 2, 3, 5], ["x", 0, 1, 4, 5],
-                ["y", 0, 1, 3, 4, 5], ["z", 0, 3, 4, 5]]  # A~Z
+    _english = [["a", Classification.ALPHABET, 0], ["b", Classification.ALPHABET, 0, 2],
+                ["c", Classification.ALPHABET, 0, 1], ["d", Classification.ALPHABET, 0, 1, 3],
+                ["e", Classification.ALPHABET, 0, 3], ["f", Classification.ALPHABET, 0, 1, 2],
+                ["g", Classification.ALPHABET, 0, 1, 2, 3], ["h", Classification.ALPHABET, 0, 2, 3],
+                ["i", Classification.ALPHABET, 1, 2],
+                ["j", Classification.ALPHABET, 1, 2, 3], ["k", Classification.ALPHABET, 0, 4],
+                ["l", Classification.ALPHABET, 0, 2, 4], ["m", Classification.ALPHABET, 0, 1, 4],
+                ["n", Classification.ALPHABET, 0, 1, 3, 4], ["o", Classification.ALPHABET, 0, 3, 4],
+                ["p", Classification.ALPHABET, 0, 1, 2, 4],
+                ["q", Classification.ALPHABET, 0, 1, 2, 3, 4], ["r", Classification.ALPHABET, 0, 2, 3, 4],
+                ["s", Classification.ALPHABET, 1, 2, 4], ["t", Classification.ALPHABET, 1, 2, 3, 4],
+                ["u", Classification.ALPHABET, 0, 4, 5],
+                ["v", Classification.ALPHABET, 0, 2, 4, 5], ["w", Classification.ALPHABET, 1, 2, 3, 5],
+                ["x", Classification.ALPHABET, 0, 1, 4, 5], ["y", Classification.ALPHABET, 0, 1, 3, 4, 5],
+                ["z", Classification.ALPHABET, 0, 3, 4, 5]]  # A~Z
     _korea = [["ㄱ", Classification.INITIAL, 1], ["ㄴ", Classification.INITIAL, 0, 1],
               ["ㄷ", Classification.INITIAL, 1, 2], ["ㄹ", Classification.INITIAL, 3],
               ["ㅁ", Classification.INITIAL, 0, 3], ["ㅂ", Classification.INITIAL, 1, 3],
