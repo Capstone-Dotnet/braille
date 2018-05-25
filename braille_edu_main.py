@@ -1,24 +1,11 @@
 # -*- coding: utf-8 -*-
-from mock_braille_controller import SolenoidController
-from mock_braille_controller import ButtonListener
-from mock_braille_controller import AnswerReader
-from mock_sound_controller import SoundController
-from braille_enum import Language
+from braille_dictionary import BrailleDictionary
 from braille_enum import GameMode
-import braille_dictionary
-import random
-
-english = [["a", 0], ["b", 0, 2], ["c", 0, 1], ["d", 0, 1, 3], ["e", 0, 3], ["f", 0, 1, 2], ["g", 0, 1, 2, 3],
-           ["h", 0, 2, 3], ["i", 1, 2], ["j", 1, 2, 3], ["k", 0, 4], ["l", 0, 2, 4], ["m", 0, 1, 4], ["n", 0, 1, 3, 4],
-           ["o", 0, 3, 4], ["p", 0, 1, 2, 4], ["q", 0, 1, 2, 3, 4], ["r", 0, 2, 3, 4], ["s", 1, 2, 4],
-           ["t", 1, 2, 3, 4], ["u", 0, 4, 5], ["v", 0, 2, 4, 5], ["w", 1, 2, 3, 5], ["x", 0, 1, 4, 5],
-           ["y", 0, 1, 3, 4, 5], ["z", 0, 3, 4, 5]]  # A~Z
-hangle_front = [[1], [0, 1], [1, 2], [3], [0, 3], [1, 3], [5], [0, 1, 2, 3], [1, 5], [3, 5], [0, 1, 2], [0, 2, 3],
-                [0, 1, 3], [1, 2, 3]]  # ㄱ~ ㅎ
-hangle_middle = [[0, 2, 5], [1, 3, 4], [1, 2, 4], [0, 3, 5], [0, 4, 5], [1, 4, 5], [0, 1, 4], [0, 1, 5], [1, 2, 5],
-                 [0, 3, 4], [0, 2, 3, 4], [0, 1, 3, 4]]  # ㅏ,ㅑ,ㅓ,ㅕ,ㅗ,ㅛ,ㅜ,ㅠ,ㅡ,ㅣ,ㅐ,ㅔ
-hangle_end = [[0], [2, 3], [3, 4], [2], [2, 5], [0, 2], [4], [2, 3, 4, 5], [0, 4], [2, 4], [2, 3, 4], [2, 4, 5],
-              [2, 3, 5], [3, 4, 5]]  # ㄱ~ㅎ
+from braille_enum import Language
+from mock_braille_controller import AnswerReader
+from mock_braille_controller import ButtonListener
+from mock_braille_controller import SolenoidController
+from mock_sound_controller import SoundController
 
 
 class TeachingMachine:
@@ -27,6 +14,7 @@ class TeachingMachine:
     buttonListener = ButtonListener()
     solenoid = SolenoidController()
     answerReader = AnswerReader()
+    dictionary = BrailleDictionary()
     soundController = SoundController(Language)
     edu_index = 0
     problem = []
@@ -40,7 +28,7 @@ class TeachingMachine:
 
     def process(self):
         print("prcesss")
-        self.english_edu()
+        self.educate()
 
     def on_click_submit_answer(self):
         answer = self.answerReader.read_and_get_abbreviation()
@@ -77,32 +65,24 @@ class TeachingMachine:
         self.soundController.say_selected_mode(self.GameMode)
 
     def on_click_next(self):
-        self.edu_index += 1
-        if self.edu_index > len(english):
-            self.edu_index = 0
-        self.educate()
+        braille = self.dictionary.next_word()
+        self.educate(braille)
 
     def on_click_pre(self):
-        self.edu_index -= 1
-        if self.edu_index < 0:
-            self.edu_index = len(english)
-        self.educate()
+        braille = self.dictionary.pre_word()
+        self.educate(braille)
 
-    def educate(self):
-        self.english_edu()
-
-    def english_edu(self):
+    def educate(self, braille):
         self.solenoid.offAll()
-        braille = english[self.edu_index]
         # 점자 출력
         for j in range(1, len(braille)):
             self.solenoid.on(braille[j])
 
-        self.soundController.play_sound("영어/" + braille[0] + ".wav")
+        self.soundController.play_sound("sound/" + braille[0] + ".wav")
 
     def english_quiz(self):
-        self.problem = english[random.randint(1, 26)]  # 문제
-        self.soundController.play_sound("sound/" + self.problem[0] + ".wav")
+        braille = self.dictionary.random_word()
+        self.soundController.play_sound("sound/" + braille + ".wav")
 
 
 teachingMachine = TeachingMachine()
