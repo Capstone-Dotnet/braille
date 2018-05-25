@@ -5,7 +5,7 @@ class SolenoidController:
     def off(self, braille_num):
         print("solenoid off : ", braille_num)
 
-    def offAll(self):
+    def off_all(self):
         print("solenoid offAll ")
 
 

@@ -1,14 +1,13 @@
-from braille_enum import Language
 from braille_enum import GameMode
 
 
 class SoundController:
 
     def __init__(self, language):
-        self.Language = language
+        self.language = language
 
     def change_language(self, language):
-        self.Language = language
+        self.language = language
 
     def say_answer_success(self):
         self.play_sound("정답입니다.")

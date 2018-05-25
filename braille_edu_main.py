@@ -9,29 +9,31 @@ from mock_sound_controller import SoundController
 
 
 class TeachingMachine:
-    Language = Language.KOREA
-    GameMode = GameMode.EDUCATION
-    buttonListener = ButtonListener()
-    solenoid = SolenoidController()
-    answerReader = AnswerReader()
-    dictionary = BrailleDictionary()
-    soundController = SoundController(Language)
-    edu_index = 0
-    problem = []
 
     def __init__(self):
-        self.buttonListener.set_on_click_lang_change_btn(self.on_click_lang_change)
-        self.buttonListener.set_on_click_mode_change_btn(self.on_click_mode_change)
-        self.buttonListener.set_on_click_next_btn(self.on_click_next)
-        self.buttonListener.set_on_click_pre_btn(self.on_click_pre)
-        self.buttonListener.set_on_click_submit_answer_btn(self.on_click_submit_answer)
+        self._buttonListener = ButtonListener()
+        self._solenoid = SolenoidController()
+        self._answerReader = AnswerReader()
+        self._dictionary = BrailleDictionary(self._language)
+        self._soundController = SoundController(self._language)
+
+        self._buttonListener.set_on_click_lang_change_btn(self.on_click_lang_change)
+        self._buttonListener.set_on_click_mode_change_btn(self.on_click_mode_change)
+        self._buttonListener.set_on_click_next_btn(self.on_click_next)
+        self._buttonListener.set_on_click_pre_btn(self.on_click_pre)
+        self._buttonListener.set_on_click_submit_answer_btn(self.on_click_submit_answer)
+
+        self._language = Language.KOREA
+        self._game_mode = GameMode.EDUCATION
+        self.edu_index = 0
+        self.problem = []
 
     def process(self):
         print("prcesss")
         self.educate()
 
     def on_click_submit_answer(self):
-        answer = self.answerReader.read_and_get_abbreviation()
+        answer = self._answerReader.read_and_get_abbreviation()
 
         fail_flag = 0
         if len(self.problem) == len(answer):
@@ -42,47 +44,48 @@ class TeachingMachine:
             fail_flag += 1
 
         if fail_flag == 0:
-            self.soundController.say_answer_success()
+            self._soundController.say_answer_success()
             self.english_quiz()
         else:
-            self.soundController.say_answer_fail()
+            self._soundController.say_answer_fail()
 
     def on_click_lang_change(self):
-        if self.Language == Language.KOREA:
-            self.Language = Language.ENGLISH
-            self.soundController.change_language(Language.ENGLISH)
+        if self._language == Language.KOREA:
+            self._language = Language.ENGLISH
+
+            self._soundController.change_language(Language.ENGLISH)
         else:
-            self.Language = Language.KOREA
-            self.soundController.change_language(Language.KOREA)
+            self._language = Language.KOREA
+            self._soundController.change_language(Language.KOREA)
         self.edu_index = 0
-        self.soundController.say_selected_language()
+        self._soundController.say_selected_language()
 
     def on_click_mode_change(self):
-        if self.GameMode == GameMode.EDUCATION:
-            self.GameMode = GameMode.QUIZ
+        if self._game_mode == GameMode.EDUCATION:
+            self._game_mode = GameMode.QUIZ
         else:
-            self.GameMode = GameMode.EDUCATION
-        self.soundController.say_selected_mode(self.GameMode)
+            self._game_mode = GameMode.EDUCATION
+        self._soundController.say_selected_mode(self._game_mode)
 
     def on_click_next(self):
-        braille = self.dictionary.next_word()
+        braille = self._dictionary.next_word()
         self.educate(braille)
 
     def on_click_pre(self):
-        braille = self.dictionary.pre_word()
+        braille = self._dictionary.pre_word()
         self.educate(braille)
 
     def educate(self, braille):
-        self.solenoid.offAll()
+        self._solenoid.off_all()
         # 점자 출력
         for j in range(1, len(braille)):
-            self.solenoid.on(braille[j])
+            self._solenoid.on(braille[j])
 
-        self.soundController.play_sound("sound/" + braille[0] + ".wav")
+        self._soundController.play_sound("sound/" + braille[0] + ".wav")
 
     def english_quiz(self):
-        braille = self.dictionary.random_word()
-        self.soundController.play_sound("sound/" + braille + ".wav")
+        braille = self._dictionary.random_word()
+        self._soundController.play_sound("sound/" + braille + ".wav")
 
 
 teachingMachine = TeachingMachine()
