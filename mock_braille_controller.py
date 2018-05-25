@@ -20,6 +20,7 @@ class AnswerReader:
         for i in range(6):
             if temp[i]:
                 answer.append(i)
+        return answer
 
 
 class ButtonListener:

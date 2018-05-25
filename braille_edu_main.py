@@ -25,7 +25,7 @@ class TeachingMachine:
         self._buttonListener.set_on_click_submit_answer_btn(self.on_click_submit_answer)
 
         self._game_mode = GameMode.EDUCATION
-        self.problem = []
+        self._problem = []
 
     def process(self):
         print("prcesss")
@@ -35,16 +35,16 @@ class TeachingMachine:
         answer = self._answerReader.read_and_get_abbreviation()
 
         fail_flag = 0
-        if len(self.problem) == len(answer):
+        if len(self._problem) == len(answer):
             for i in range(len(answer)):
-                if self.problem[i] != answer[i]:
+                if self._problem[i] != answer[i]:
                     fail_flag += 1
         else:
             fail_flag += 1
 
         if fail_flag == 0:
             self._soundController.say_answer_success()
-            self.english_quiz()
+            self.quiz()
         else:
             self._soundController.say_answer_fail()
 
@@ -82,10 +82,13 @@ class TeachingMachine:
 
         self._soundController.play_sound("sound/" + braille[0] + ".wav")
 
-    def english_quiz(self):
-        braille = self._dictionary.random_word()
-        self._soundController.play_sound("sound/" + braille + ".wav")
+    def quiz(self):
+        self._problem = self._dictionary.random_word()
+        self._soundController.play_sound("sound/" + self._problem[0] + ".wav")
 
 
 teachingMachine = TeachingMachine()
 teachingMachine.process()
+
+teachingMachine.quiz()
+teachingMachine.on_click_submit_answer()
