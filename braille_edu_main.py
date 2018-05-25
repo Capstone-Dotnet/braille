@@ -25,7 +25,6 @@ class TeachingMachine:
         self._buttonListener.set_on_click_submit_answer_btn(self.on_click_submit_answer)
 
         self._game_mode = GameMode.EDUCATION
-        self.edu_index = 0
         self.problem = []
 
     def process(self):
@@ -52,12 +51,12 @@ class TeachingMachine:
     def on_click_lang_change(self):
         if self._language == Language.KOREA:
             self._language = Language.ENGLISH
-
+            self._dictionary.change_language(Language.ENGLISH)
             self._soundController.change_language(Language.ENGLISH)
         else:
             self._language = Language.KOREA
+            self._dictionary.change_language(Language.KOREA)
             self._soundController.change_language(Language.KOREA)
-        self.edu_index = 0
         self._soundController.say_selected_language()
 
     def on_click_mode_change(self):
