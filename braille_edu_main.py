@@ -8,6 +8,7 @@ from braille_controller import SolenoidController
 from sound_controller import SoundController
 import time
 
+
 class TeachingMachine:
 
     def __init__(self):
@@ -79,11 +80,11 @@ class TeachingMachine:
         self.educate(braille)
 
     def educate(self, braille):
+        print("educate braille : ", braille)
         self._solenoid.off_all()
         # 점자 출력
         for j in range(2, len(braille)):
             self._solenoid.on(braille[j])
-
         self._soundController.play_braille(braille)
 
     def quiz(self):
