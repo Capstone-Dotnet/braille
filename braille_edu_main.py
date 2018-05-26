@@ -39,9 +39,9 @@ class TeachingMachine:
             answer = self._answerReader.read_and_get_abbreviation()
 
             fail_flag = 0
-            if len(self._problem) == len(answer):
+            if (len(self._problem) - 2) == len(answer):
                 for i in range(len(answer)):
-                    if self._problem[i] != answer[i]:
+                    if self._problem[i + 2] != answer[i]:
                         fail_flag += 1
             else:
                 fail_flag += 1
