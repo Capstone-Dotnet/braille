@@ -40,7 +40,8 @@ class AnswerReader:
     ANSWER_BTN = []
 
     def __init__(self):
-        ANSWER_PIN = [17, 18, 27, 23, 22, 24]
+        ANSWER_PIN = [24, 18, 27, 23, 22, 17]
+
         for i in ANSWER_PIN:
             self.ANSWER_BTN.append(Button(i))
 
