@@ -33,21 +33,24 @@ class TeachingMachine:
 
     def on_click_submit_answer(self):
         print("on_click_submit_answer")
-        answer = self._answerReader.read_and_get_abbreviation()
+        if self._game_mode == GameMode.QUIZ:
+            answer = self._answerReader.read_and_get_abbreviation()
 
-        fail_flag = 0
-        if len(self._problem) == len(answer):
-            for i in range(len(answer)):
-                if self._problem[i] != answer[i]:
-                    fail_flag += 1
-        else:
-            fail_flag += 1
+            fail_flag = 0
+            if len(self._problem) == len(answer):
+                for i in range(len(answer)):
+                    if self._problem[i] != answer[i]:
+                        fail_flag += 1
+            else:
+                fail_flag += 1
 
-        if fail_flag == 0:
-            self._soundController.say_answer_success()
-            self.quiz()
+            if fail_flag == 0:
+                self._soundController.say_answer_success()
+                self.quiz()
+            else:
+                self._soundController.say_answer_fail()
         else:
-            self._soundController.say_answer_fail()
+            print("문제 모드가 아닙니다.   정답을 제출할 수 없습니다.")
 
     def on_click_lang_change(self):
         print("on_click_lang_change")
@@ -71,13 +74,19 @@ class TeachingMachine:
 
     def on_click_next(self):
         print("on_click_next")
-        braille = self._dictionary.next_word()
-        self.educate(braille)
+        if self._game_mode == GameMode.EDUCATION:
+            braille = self._dictionary.next_word()
+            self.educate(braille)
+        elif self._game_mode == GameMode.QUIZ:
+            self.quiz()
 
     def on_click_pre(self):
         print("on_click_pre")
-        braille = self._dictionary.pre_word()
-        self.educate(braille)
+        if self._game_mode == GameMode.EDUCATION:
+            braille = self._dictionary.pre_word()
+            self.educate(braille)
+        elif self._game_mode == GameMode.QUIZ:
+            self.quiz()
 
     def educate(self, braille):
         print("educate braille : ", braille)
@@ -90,6 +99,7 @@ class TeachingMachine:
     def quiz(self):
         self._problem = self._dictionary.random_word()
         self._soundController.play_braille(self._problem)
+        print(self._problem[0] + "는 무엇일까요?")
 
 
 teachingMachine = TeachingMachine()

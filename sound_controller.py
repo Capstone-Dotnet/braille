@@ -29,7 +29,7 @@ class SoundController:
         print("오답입니다.")
 
     def say_selected_language(self):
-        print(self._prefix_path+"입니다.")
+        print(self._prefix_path+"로 변경되었습니다.")
 
     def say_selected_mode(self, mode):
         if mode == GameMode.QUIZ:
