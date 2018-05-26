@@ -18,7 +18,7 @@ class BrailleDictionary:
                 ["u", Classification.ALPHABET, 0, 4, 5],
                 ["v", Classification.ALPHABET, 0, 2, 4, 5], ["w", Classification.ALPHABET, 1, 2, 3, 5],
                 ["x", Classification.ALPHABET, 0, 1, 4, 5], ["y", Classification.ALPHABET, 0, 1, 3, 4, 5],
-                ["z", Classification.ALPHABET, 0, 3, 4, 5]]  # A~Z
+                ["z", Classification.ALPHABET, 0, 3, 4, 5]]
     _korea = [["ㄱ", Classification.INITIAL, 1], ["ㄴ", Classification.INITIAL, 0, 1],
               ["ㄷ", Classification.INITIAL, 1, 2], ["ㄹ", Classification.INITIAL, 3],
               ["ㅁ", Classification.INITIAL, 0, 3], ["ㅂ", Classification.INITIAL, 1, 3],

@@ -1,8 +1,9 @@
+#!/usr/bin/python3
 from braille_enum import GameMode
 from braille_enum import Classification
 from braille_enum import Language
 from simpleaudio import WaveObject
-
+import os
 
 class SoundController:
     def __init__(self, language):
@@ -10,6 +11,7 @@ class SoundController:
         self._prefix_path = ""
         self._suffix_path = ".wav"
         self.change_language(language)
+        os.chdir(os.path.dirname(os.path.realpath(__file__)) +"/")
 
     def change_language(self, language):
         self.language = language

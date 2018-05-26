@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python3
 from braille_dictionary import BrailleDictionary
 from braille_enum import GameMode
 from braille_enum import Language
@@ -37,7 +37,8 @@ class TeachingMachine:
         print("on_click_submit_answer")
         if self._game_mode == GameMode.QUIZ:
             answer = self._answerReader.read_and_get_abbreviation()
-
+            print(answer)
+            print(self._problem)
             fail_flag = 0
             if (len(self._problem) - 2) == len(answer):
                 for i in range(len(answer)):
@@ -97,7 +98,6 @@ class TeachingMachine:
     def educate(self, braille):
         print("educate braille : ", braille)
         self._solenoid.off_all()
-        # 점자 출력
         for j in range(2, len(braille)):
             self._solenoid.on(braille[j])
         self._soundController.play_braille(braille)
@@ -112,4 +112,4 @@ teachingMachine = TeachingMachine()
 teachingMachine.process()
 
 while True:
-    time.sleep(1000)
+    time.sleep(10000)
