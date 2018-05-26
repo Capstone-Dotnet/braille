@@ -9,8 +9,9 @@ class SoundController:
         self.language = language
         self.mixer = pygame.mixer
         self.mixer.init()
-        self._prefix_path = "sound/"
+        self._prefix_path = ""
         self._suffix_path = ".wav"
+        self.change_language(language)
 
     def change_language(self, language):
         self.language = language
