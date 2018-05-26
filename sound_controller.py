@@ -1,7 +1,6 @@
 from braille_enum import GameMode
 from braille_enum import Classification
 from braille_enum import Language
-import time
 from simpleaudio import WaveObject
 
 
@@ -11,7 +10,7 @@ class SoundController:
         self._prefix_path = ""
         self._suffix_path = ".wav"
         self.change_language(language)
-        
+
 
     def change_language(self, language):
         self.language = language
@@ -50,4 +49,3 @@ class SoundController:
         elif braille[1] == Classification.FINAL:
             self.play_sound("종성")
         self.play_sound(braille[0])
-        #self.mixer.music.play()
