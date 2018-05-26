@@ -2,11 +2,11 @@
 from braille_dictionary import BrailleDictionary
 from braille_enum import GameMode
 from braille_enum import Language
-from mock_braille_controller import AnswerReader
-from mock_braille_controller import ButtonListener
-from mock_braille_controller import SolenoidController
-from mock_sound_controller import SoundController
-
+from braille_controller import AnswerReader
+from braille_controller import ButtonListener
+from braille_controller import SolenoidController
+from sound_controller import SoundController
+import time
 
 class TeachingMachine:
 
@@ -89,5 +89,5 @@ class TeachingMachine:
 teachingMachine = TeachingMachine()
 teachingMachine.process()
 
-teachingMachine.quiz()
-teachingMachine.on_click_submit_answer()
+while True:
+    time.sleep(1000)
