@@ -20,7 +20,7 @@ class SoundController:
             self._suffix_path = ".wav"
         elif language == Language.ENGLISH:
             self._prefix_path = "sound/영어/"
-            self._suffix_path = ".mp3"
+            self._suffix_path = ".wav"
 
     def say_answer_success(self):
         print("정답입니다.")
