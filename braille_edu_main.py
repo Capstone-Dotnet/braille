@@ -69,6 +69,7 @@ class TeachingMachine:
     def on_click_mode_change(self):
         print("on_click_mode_change")
         if self._game_mode == GameMode.EDUCATION:
+            self._solenoid.off_all()
             self._game_mode = GameMode.QUIZ
             self._soundController.say_selected_mode(self._game_mode)
             self.quiz()

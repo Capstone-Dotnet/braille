@@ -57,7 +57,7 @@ class BrailleDictionary:
         return self._current_dic_lng[self._current_page]
 
     def random_word(self):
-        return self._current_dic_lng[random.randint(0, len(self._current_dic_lng))]
+        return self._current_dic_lng[random.randint(0, len(self._current_dic_lng)-1)]
 
     def change_language(self, language):
         if language == Language.KOREA:
