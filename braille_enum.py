@@ -12,8 +12,8 @@ class GameMode(enum.Enum):
 
 
 class Classification(enum.Enum):
-    INITIAL = enum.auto()
-    MEDIAL = enum.auto()
-    FINAL = enum.auto()
-    ABBREVIATION = enum.auto()
-    ALPHABET = enum.auto()
+    INITIAL = 0
+    MEDIAL = 1
+    FINAL = 2
+    ABBREVIATION = 3
+    ALPHABET = 4
