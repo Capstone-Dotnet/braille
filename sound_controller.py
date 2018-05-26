@@ -11,7 +11,6 @@ class SoundController:
         self._suffix_path = ".wav"
         self.change_language(language)
 
-
     def change_language(self, language):
         self.language = language
         if language == Language.KOREA:
@@ -27,14 +26,20 @@ class SoundController:
     def say_answer_fail(self):
         self.play_sound("answer_success")
 
+    def say_answer_error(self):
+        self.play_sound("answer_error")
+
     def say_selected_language(self):
-        print(self._prefix_path+"로 변경되었습니다.")
+        self.play_sound("chang_lang")
 
     def say_selected_mode(self, mode):
         if mode == GameMode.QUIZ:
             self.play_sound("selected_mode_quiz")
         elif mode == GameMode.EDUCATION:
             self.play_sound("selected_mode_edu")
+
+    def say_question_suffix(self):
+        self.play_sound("question_suffix")
 
     def play_sound(self, name):
         wave_obj = WaveObject.from_wave_file(self._prefix_path + name + self._suffix_path)
