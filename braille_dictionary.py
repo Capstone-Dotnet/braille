@@ -61,3 +61,4 @@ class BrailleDictionary:
 
     def change_language(self, language):
         self._language = language
+        self._current_page = 0
