@@ -35,7 +35,7 @@ class SoundController:
         if mode == GameMode.QUIZ:
             print("퀴즈모드입니다.")
         elif mode == GameMode.EDUCATION:
-            print("문제모드입니다.")
+            print("교육모드입니다.")
 
     def play_sound(self, name):
         self.mixer.Sound(self._prefix_path + name + self._suffix_path).play()

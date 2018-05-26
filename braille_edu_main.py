@@ -29,6 +29,8 @@ class TeachingMachine:
         self._problem = []
 
     def process(self):
+        self._soundController.say_selected_language()
+        self._soundController.say_selected_mode(self._game_mode)
         self.on_click_next()
 
     def on_click_submit_answer(self):
