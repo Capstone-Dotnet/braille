@@ -7,7 +7,8 @@ import pygame
 class SoundController:
     def __init__(self, language):
         self.language = language
-        self.mixer = pygame.mixer.init()
+        self.mixer = pygame.mixer
+        self.mixer.init()
         self._prefix_path = "sound/"
         self._suffix_path = ".wav"
 
