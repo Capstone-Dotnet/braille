@@ -21,10 +21,10 @@ class SoundController:
             self._suffix_path = ".wav"
 
     def say_answer_success(self):
-        self.play_sound("answer_fail")
+        self.play_sound("answer_success")
 
     def say_answer_fail(self):
-        self.play_sound("answer_success")
+        self.play_sound("answer_fail")
 
     def say_answer_error(self):
         self.play_sound("answer_error")
