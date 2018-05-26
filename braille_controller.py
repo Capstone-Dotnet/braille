@@ -9,24 +9,31 @@ class SolenoidController:
         SOLENOID_PIN = [13, 19, 26, 16, 20, 21]
         for i in SOLENOID_PIN:
             self.SOLENOID.append(OutputDevice(i))
-        for i in range(2, 6):
-            self.SOLENOID[i].on()
+        # for i in range(2, 6):
+        #     self.SOLENOID[i].on()
+        self.off_all()
 
     def __del__(self):
         for i in self.SOLENOID:
             i.close()
 
     def on(self, braille_num):  # braille_num = 0 ~ 5
-        if braille_num < 2:
-            self.SOLENOID[braille_num].on()
-        else:
-            self.SOLENOID[braille_num].off()
+        # if braille_num < 2:
+        self.SOLENOID[braille_num].on()
+        # else:
+        #     self.SOLENOID[braille_num].off()
 
     def off(self, braille_num):
-        if braille_num < 2:
-            self.SOLENOID[braille_num].off()
-        else:
-            self.SOLENOID[braille_num].on()
+        # if braille_num < 2:
+        self.SOLENOID[braille_num].off()
+        # else:
+        #     self.SOLENOID[braille_num].on()
+
+    def off_all(self):
+        for i in range(6):
+            self.SOLENOID[i].off()
+
+        print("solenoid offAll ")
 
 
 class AnswerReader:
