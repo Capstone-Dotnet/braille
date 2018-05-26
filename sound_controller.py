@@ -23,19 +23,19 @@ class SoundController:
             self._suffix_path = ".wav"
 
     def say_answer_success(self):
-        print("정답입니다.")
+        self.play_sound("answer_fail")
 
     def say_answer_fail(self):
-        print("오답입니다.")
+        self.play_sound("answer_success")
 
     def say_selected_language(self):
         print(self._prefix_path+"로 변경되었습니다.")
 
     def say_selected_mode(self, mode):
         if mode == GameMode.QUIZ:
-            print("퀴즈모드입니다.")
+            self.play_sound("selected_mode_quiz")
         elif mode == GameMode.EDUCATION:
-            print("교육모드입니다.")
+            self.play_sound("selected_mode_edu")
 
     def play_sound(self, name):
         self.mixer.Sound(self._prefix_path + name + self._suffix_path).play()
@@ -43,9 +43,9 @@ class SoundController:
 
     def play_braille(self, braille):
         if braille[1] == Classification.INITIAL:
-            print("초성")
+            self.play_sound("초성")
         elif braille[1] == Classification.MEDIAL:
-            print("중성")
+            self.play_sound("중성")
         elif braille[1] == Classification.FINAL:
-            print("종성")
+            self.play_sound("종성")
         self.play_sound(braille[0])
