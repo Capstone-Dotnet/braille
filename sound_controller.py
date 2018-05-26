@@ -30,7 +30,7 @@ class SoundController:
         self.play_sound("answer_error")
 
     def say_selected_language(self):
-        self.play_sound("chang_lang")
+        self.play_sound("change_lang")
 
     def say_selected_mode(self, mode):
         if mode == GameMode.QUIZ:
