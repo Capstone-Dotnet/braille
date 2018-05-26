@@ -1,17 +1,17 @@
 from braille_enum import GameMode
 from braille_enum import Classification
 from braille_enum import Language
-import pygame
+import time
+from simpleaudio import WaveObject
 
 
 class SoundController:
     def __init__(self, language):
         self.language = language
-        self.mixer = pygame.mixer
-        self.mixer.init()
         self._prefix_path = ""
         self._suffix_path = ".wav"
         self.change_language(language)
+        
 
     def change_language(self, language):
         self.language = language
@@ -38,8 +38,9 @@ class SoundController:
             self.play_sound("selected_mode_edu")
 
     def play_sound(self, name):
-        self.mixer.Sound(self._prefix_path + name + self._suffix_path).play()
-        print("play sound : ", self._prefix_path + name + self._suffix_path)
+        wave_obj = WaveObject.from_wave_file(self._prefix_path + name + self._suffix_path)
+        play_obj = wave_obj.play()
+        play_obj.wait_done()
 
     def play_braille(self, braille):
         if braille[1] == Classification.INITIAL:
@@ -49,3 +50,4 @@ class SoundController:
         elif braille[1] == Classification.FINAL:
             self.play_sound("종성")
         self.play_sound(braille[0])
+        #self.mixer.music.play()
