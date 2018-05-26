@@ -46,7 +46,7 @@ class BrailleDictionary:
 
     def next_word(self):
         self._current_page += 1
-        if self._current_page > len(self._current_dic_lng):
+        if self._current_page >= len(self._current_dic_lng):
             self._current_page = 0
         return self._current_dic_lng[self._current_page]
 
