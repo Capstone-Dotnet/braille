@@ -1,5 +1,6 @@
-import random
 from braille_enum import Classification
+from braille_enum import Language
+import random
 
 
 class BrailleDictionary:
@@ -39,10 +40,9 @@ class BrailleDictionary:
               ["ㅋ", Classification.FINAL, 2, 3, 4], ["ㅌ", Classification.FINAL, 2, 4, 5],
               ["ㅍ", Classification.FINAL, 2, 3, 5], ["ㅎ", Classification.FINAL, 3, 4, 5]]
 
-    def __init__(self, language):
+    def __init__(self):
         self._current_dic_lng = self._korea
         self._current_page = 0
-        self._language = language
 
     def next_word(self):
         self._current_page += 1
@@ -60,5 +60,8 @@ class BrailleDictionary:
         return self._current_dic_lng[random.randint(0, len(self._current_dic_lng))]
 
     def change_language(self, language):
-        self._language = language
+        if language == Language.KOREA:
+            self._current_dic_lng = self._korea
+        elif language == Language.ENGLISH:
+            self._current_dic_lng = self._english
         self._current_page = 0

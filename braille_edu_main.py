@@ -16,7 +16,7 @@ class TeachingMachine:
         self._solenoid = SolenoidController()
         self._answerReader = AnswerReader()
         self._language = Language.KOREA
-        self._dictionary = BrailleDictionary(self._language)
+        self._dictionary = BrailleDictionary()
         self._soundController = SoundController(self._language)
 
         self._buttonListener.set_on_click_lang_change_btn(self.on_click_lang_change)
