@@ -31,6 +31,7 @@ class TeachingMachine:
         self.on_click_next()
 
     def on_click_submit_answer(self):
+        print("on_click_submit_answer")
         answer = self._answerReader.read_and_get_abbreviation()
 
         fail_flag = 0
@@ -48,6 +49,7 @@ class TeachingMachine:
             self._soundController.say_answer_fail()
 
     def on_click_lang_change(self):
+        print("on_click_lang_change")
         if self._language == Language.KOREA:
             self._language = Language.ENGLISH
             self._dictionary.change_language(Language.ENGLISH)
@@ -59,6 +61,7 @@ class TeachingMachine:
         self._soundController.say_selected_language()
 
     def on_click_mode_change(self):
+        print("on_click_mode_change")
         if self._game_mode == GameMode.EDUCATION:
             self._game_mode = GameMode.QUIZ
         else:
@@ -66,10 +69,12 @@ class TeachingMachine:
         self._soundController.say_selected_mode(self._game_mode)
 
     def on_click_next(self):
+        print("on_click_next")
         braille = self._dictionary.next_word()
         self.educate(braille)
 
     def on_click_pre(self):
+        print("on_click_pre")
         braille = self._dictionary.pre_word()
         self.educate(braille)
 
