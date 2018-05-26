@@ -69,11 +69,11 @@ class TeachingMachine:
         if self._game_mode == GameMode.EDUCATION:
             self._game_mode = GameMode.QUIZ
             self._soundController.say_selected_mode(self._game_mode)
-            self.on_click_next()
+            self.quiz()
         else:
             self._game_mode = GameMode.EDUCATION
             self._soundController.say_selected_mode(self._game_mode)
-            self.quiz()
+            self.on_click_next()
 
     def on_click_next(self):
         print("on_click_next")
