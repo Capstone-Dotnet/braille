@@ -77,16 +77,21 @@ class ButtonListener:
         self.SUBMIT_ANSWER_BTN.close()
 
     def set_on_click_lang_change_btn(self, on_click):
+        print("set_on_click_lang_change_btn")
         self.LANGUAGE_CHANGE_BTN.when_pressed = on_click
 
     def set_on_click_next_btn(self, on_click):
+        print("set_on_click_next_btn")
         self.NEXT_BTN.when_pressed = on_click
 
     def set_on_click_pre_btn(self, on_click):
+        print("set_on_click_pre_btn")
         self.PRE_BTN.when_pressed = on_click
 
     def set_on_click_mode_change_btn(self, on_click):
+        print("set_on_click_mode_change_btn")
         self.MODE_CHANGE_BTN.when_pressed = on_click
 
     def set_on_click_submit_answer_btn(self, on_click):
+        print("set_on_click_submit_answer_btn")
         self.SUBMIT_ANSWER_BTN.when_pressed = on_click
