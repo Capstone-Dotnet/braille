@@ -50,7 +50,7 @@ class TeachingMachine:
             else:
                 self._soundController.say_answer_fail()
         else:
-            print("문제 모드가 아닙니다.   정답을 제출할 수 없습니다.")
+            print("퀴즈 모드가 아닙니다.   정답을 제출할 수 없습니다.")
 
     def on_click_lang_change(self):
         print("on_click_lang_change")
@@ -68,9 +68,12 @@ class TeachingMachine:
         print("on_click_mode_change")
         if self._game_mode == GameMode.EDUCATION:
             self._game_mode = GameMode.QUIZ
+            self._soundController.say_selected_mode(self._game_mode)
+            self.on_click_next()
         else:
             self._game_mode = GameMode.EDUCATION
-        self._soundController.say_selected_mode(self._game_mode)
+            self._soundController.say_selected_mode(self._game_mode)
+            self.quiz()
 
     def on_click_next(self):
         print("on_click_next")
@@ -95,6 +98,7 @@ class TeachingMachine:
         for j in range(2, len(braille)):
             self._solenoid.on(braille[j])
         self._soundController.play_braille(braille)
+        print("입니다.")
 
     def quiz(self):
         self._problem = self._dictionary.random_word()
