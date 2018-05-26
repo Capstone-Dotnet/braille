@@ -27,7 +27,7 @@ class SoundController:
         print("오답입니다.")
 
     def say_selected_language(self):
-        print("한국어입니다.")
+        print(self._prefix_path+"입니다.")
 
     def say_selected_mode(self, mode):
         if mode == GameMode.QUIZ:
