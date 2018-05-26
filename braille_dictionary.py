@@ -53,7 +53,7 @@ class BrailleDictionary:
     def pre_word(self):
         self._current_page -= 1
         if self._current_page < 0:
-            self._current_page = len(self._current_dic_lng)
+            self._current_page = len(self._current_dic_lng) - 1
         return self._current_dic_lng[self._current_page]
 
     def random_word(self):
