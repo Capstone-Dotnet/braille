@@ -22,7 +22,7 @@ class BrailleDictionary:
     _korea = [["ㄱ", Classification.INITIAL, 1], ["ㄴ", Classification.INITIAL, 0, 1],
               ["ㄷ", Classification.INITIAL, 1, 2], ["ㄹ", Classification.INITIAL, 3],
               ["ㅁ", Classification.INITIAL, 0, 3], ["ㅂ", Classification.INITIAL, 1, 3],
-              ["ㅅ", Classification.INITIAL, 5], ["ㅇ", Classification.INITIAL, 0, 1, 2, 3],
+              ["ㅅ", Classification.INITIAL, 5], # ["ㅇ", Classification.INITIAL, 0, 1, 2, 3] 초성 'ㅇ' 제외, 'ㅇ'이 모음앞에 쓰일 때는 생략, 'ㅇ'만 적을때는 앞에 1~6점을 다 적어야함
               ["ㅈ", Classification.INITIAL, 1, 5], ["ㅊ", Classification.INITIAL, 3, 5],
               ["ㅋ", Classification.INITIAL, 0, 1, 2], ["ㅌ", Classification.INITIAL, 0, 2, 3],
               ["ㅍ", Classification.INITIAL, 0, 1, 3], ["ㅎ", Classification.INITIAL, 1, 2, 3],
