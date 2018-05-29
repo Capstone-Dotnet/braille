@@ -6,7 +6,7 @@ class SolenoidController:
     SOLENOID = []
 
     def __init__(self):
-        SOLENOID_PIN = [13, 20, 19, 21, 26, 16]
+        SOLENOID_PIN = [13, 16, 19, 21, 26, 20]
         for i in SOLENOID_PIN:
             self.SOLENOID.append(OutputDevice(i))
         # for i in range(2, 6):
