@@ -29,8 +29,7 @@ class TeachingMachine:
         self._problem = []
 
     def process(self):
-        self._soundController.say_selected_language()
-        self._soundController.say_selected_mode(self._game_mode)
+        self._soundController.play_intro()
         self.on_click_next()
 
     def on_click_submit_answer(self):
@@ -103,6 +102,7 @@ class TeachingMachine:
         self._soundController.play_braille(braille)
 
     def quiz(self):
+        self._soundController.say_question_prefix()
         self._problem = self._dictionary.random_word()
         self._soundController.play_braille(self._problem)
         self._soundController.say_question_suffix()

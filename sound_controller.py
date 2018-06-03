@@ -38,10 +38,17 @@ class SoundController:
         if mode == GameMode.QUIZ:
             self.play_sound("selected_mode_quiz")
         elif mode == GameMode.EDUCATION:
-            self.play_sound("selected_mode_edu")
+            self.play_sound("selected_mode_training")
+
+    def say_question_prefix(self):
+        if self.language == Language.ENGLISH:
+            self.play_sound("question_prefix")
 
     def say_question_suffix(self):
         self.play_sound("question_suffix")
+
+    def play_intro(self):
+        self.play_sound("introduction")
 
     def play_sound(self, name):
         wave_obj = WaveObject.from_wave_file(self._prefix_path + name + self._suffix_path)

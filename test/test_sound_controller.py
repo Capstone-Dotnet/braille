@@ -4,7 +4,8 @@ import time
 sound_controller.play_sound("sounds/test_sound.wav")
 time.sleep(2)
 
-import mock_sound_controller
+from mock import mock_sound_controller
+
 mock_sound_controller.play_sound("sounds/test_sound.wav")
 
 
